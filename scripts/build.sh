@@ -28,6 +28,12 @@ case "$(uname -s)" in
   Darwin)
     echo "macOS"
     rustup target add x86_64-apple-darwin
+
+    bun run build:executables:macos
+    lipo -create -output src-tauri/binaries/claude-code-universal-apple-darwin \
+       src-tauri/binaries/claude-code-x86_64-apple-darwin \
+       src-tauri/binaries/claude-code-aarch64-apple-darwin
+
     bun run tauri build --target universal-apple-darwin
     echo ./src-tauri/target/release/claudia
     ;;
